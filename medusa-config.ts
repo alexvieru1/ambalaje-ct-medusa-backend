@@ -34,6 +34,9 @@ module.exports = defineConfig({
         productIndexName: process.env.ALGOLIA_PRODUCT_INDEX_NAME!,
       },
     },
+    { resolve: "@medusajs/stock-location" },
+    { resolve: "@medusajs/inventory" },
+    { resolve: "@medusajs/fulfillment" },
     {
       resolve: "@medusajs/medusa/payment",
       options: {
