@@ -2,6 +2,8 @@ import { loadEnv, defineConfig } from "@medusajs/framework/utils";
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
 
+const redisUrl = process.env.REDIS_URL;
+
 module.exports = defineConfig({
   admin: {
     backendUrl: process.env.MEDUSA_BACKEND_URL,
@@ -65,25 +67,18 @@ module.exports = defineConfig({
         ],
       },
     },
-    {
-      resolve: "@medusajs/medusa/cache-redis",
-      options: {
-        redisUrl: process.env.REDIS_URL,
-      },
-    },
-    {
-      resolve: "@medusajs/medusa/event-bus-redis",
-      options: {
-        redisUrl: process.env.REDIS_URL,
-      },
-    },
-    {
-      resolve: "@medusajs/medusa/workflow-engine-redis",
-      options: {
-        redis: {
-          url: process.env.REDIS_URL,
-        },
-      },
-    },
+    ...(redisUrl
+      ? [
+          { resolve: "@medusajs/medusa/cache-redis", options: { redisUrl } },
+          {
+            resolve: "@medusajs/medusa/event-bus-redis",
+            options: { redisUrl },
+          },
+          {
+            resolve: "@medusajs/medusa/workflow-engine-redis",
+            options: { redis: { url: redisUrl } },
+          },
+        ]
+      : []),
   ],
 });
