@@ -59,7 +59,7 @@
     "yalc": "^1.0.0-pre.53"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "packageManager": "yarn@1.22.22"
 }
